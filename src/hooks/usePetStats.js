@@ -120,6 +120,15 @@ export function usePetStats() {
     }))
   }, [])
 
+  const wash = useCallback(() => {
+    setStats(s => ({
+      ...s,
+      vibe: Math.min(100, s.vibe + 10),
+      battery: Math.min(100, s.battery + 5),
+    }))
+    return '+10 Vibe, +5 Battery!'
+  }, [])
+
   const isFainted = stats.vibe <= 0 || stats.fuel <= 0 || stats.battery <= 0
 
   return {
@@ -127,6 +136,7 @@ export function usePetStats() {
     decayStats,
     feed,
     pet,
+    wash,
     toggleSleep,
     isFainted,
   }
