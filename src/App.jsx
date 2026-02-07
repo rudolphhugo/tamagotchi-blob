@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Spline from '@splinetool/react-spline'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, Utensils, Battery, Moon, Sun, Sparkles } from 'lucide-react'
+import { Heart, Utensils, Battery, Moon, Sun, Sparkles, Droplets } from 'lucide-react'
 
 import { useInterval } from './hooks/useInterval'
 import { usePetStats } from './hooks/usePetStats'
@@ -64,7 +64,7 @@ function StatBar({ icon: Icon, label, value, colorClass }) {
 }
 
 function App() {
-  const { stats, decayStats, feed, pet, toggleSleep, isFainted } = usePetStats()
+  const { stats, decayStats, feed, pet, wash, toggleSleep, isFainted } = usePetStats()
   const [toast, setToast] = useState({ message: '', visible: false, type: 'default' })
   const [gradient, setGradient] = useState(getTimeGradient())
 
@@ -93,6 +93,11 @@ function App() {
 
   const handlePet = () => {
     const msg = pet()
+    showToast(msg, 'vibe')
+  }
+
+  const handleWash = () => {
+    const msg = wash()
     showToast(msg, 'vibe')
   }
 
@@ -234,6 +239,16 @@ function App() {
           >
             <Heart className="w-5 h-5" />
             Pet
+          </Button>
+
+          <Button
+            variant="default"
+            size="lg"
+            onClick={handleWash}
+            disabled={stats.isSleeping}
+          >
+            <Droplets className="w-5 h-5" />
+            Wash
           </Button>
 
           <Button
